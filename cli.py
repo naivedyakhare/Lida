@@ -14,12 +14,14 @@ def ui(host: str = "127.0.0.1",
        port: int = 8081,
        workers: int = 1,
        reload: Annotated[bool, typer.Option("--reload")] = True,
-       docs: bool = False):
+       docs: bool = False,
+       model: str = "cohere"):
     """
-    Launch the lida .Pass in parameters host, port, workers, and reload to override the default values.
+    Launch the lida .Pass in parameters host, port, workers, llm model and reload to override the default values.
     """
 
     os.environ["LIDA_API_DOCS"] = str(docs)
+    os.environ["DEFAULT_LLM"] = str(model)
 
     uvicorn.run(
         "lida.web.app:app",
@@ -38,6 +40,9 @@ def models():
         for model in provider[1]["models"]:
             print(f"  - {model['name']}")
 
+# @app.command()
+# def testing(a: int = 1):
+#     print(a)
 
 def run():
     app()

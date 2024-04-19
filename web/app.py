@@ -1,5 +1,5 @@
 from dotenv import load_dotenv, find_dotenv
-load_dotenv()
+load_dotenv(find_dotenv())
 
 import json
 import os
@@ -19,10 +19,11 @@ print("To set COHERE_API_KEY create a .env file and write COHERE_API_KEY=<api_ke
 import os
 print("//////////////////////////////////////")
 print("//////////////////////////////////////")
+print(os.environ.get("DEFAULT_LLM", "cohere"))
 
 # instantiate model and generator
-default_llm = "cohere"
-textgen = llm(default_llm)
+llm_model = os.environ.get("DEFAULT_LLM", "cohere")
+textgen = llm(llm_model)
 logger = logging.getLogger("lida")
 api_docs = os.environ.get("LIDA_API_DOCS", "False") == "True"
 
